@@ -47,11 +47,13 @@
             {
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
-                var response = await client.PostAsync("Token",
-                    new StringContent(string.Format(
-                    "grant_type=password&username={0}&password={1}",
-                    username, password),
-                    Encoding.UTF8, "application/x-www-form-urlencoded"));
+                var stringContent = new StringContent($"grant_type=password&username={username}&password={password}");
+                var response = await client.PostAsync("Token", stringContent);
+                //var response = await client.PostAsync("Token",
+                //    new StringContent(string.Format(
+                //    "grant_type=password&username={0}&password={1}",
+                //    username, password),
+                //    Encoding.UTF8, "application/x-www-form-urlencoded"));
                 var resultJSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<TokenResponse>(resultJSON);
                 return result;
@@ -70,7 +72,8 @@
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var url = string.Format("{0}{1}/{2}", servicePrefix, controller, id);
+                var url = $"/{servicePrefix}/{controller}/{id}";
+                //var url = string.Format("{0}{1}/{2}", servicePrefix, controller, id);
                 var response = await client.GetAsync(url);
 
                 if (!response.IsSuccessStatusCode)
@@ -110,7 +113,8 @@
                 client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue(tokenType, accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var url = string.Format("{0}{1}", servicePrefix, controller);
+                var url = $"/{servicePrefix}/{controller}";
+                //var url = string.Format("{0}{1}", servicePrefix, controller);
                 var response = await client.GetAsync(url);
                 var result = await response.Content.ReadAsStringAsync();
 
@@ -149,7 +153,8 @@
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var url = string.Format("{0}{1}/{2}", servicePrefix, controller, id);
+                var url = $"/{servicePrefix}/{controller}/{id}";
+                //var url = string.Format("{0}{1}/{2}", servicePrefix, controller, id);
                 var response = await client.GetAsync(url);
 
                 if (!response.IsSuccessStatusCode)
@@ -190,7 +195,8 @@
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var url = string.Format("{0}{1}", servicePrefix, controller);
+                var url = $"/{servicePrefix}/{controller}";
+                //var url = string.Format("{0}{1}", servicePrefix, controller);
                 var response = await client.PostAsync(url, content);
 
                 if (!response.IsSuccessStatusCode)
@@ -230,7 +236,8 @@
                 var content = new StringContent(request, Encoding.UTF8, "application/json");
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
-                var url = string.Format("{0}{1}", servicePrefix, controller);
+                var url = $"/{servicePrefix}/{controller}";
+                //var url = string.Format("{0}{1}", servicePrefix, controller);
                 var response = await client.PostAsync(url, content);
 
                 if (!response.IsSuccessStatusCode)
@@ -272,7 +279,8 @@
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
                 client.BaseAddress = new Uri(urlBase);
-                var url = string.Format("{0}{1}/{2}", servicePrefix, controller, model.GetHashCode());
+                var url = $"/{servicePrefix}/{controller}/{model.GetHashCode()}";
+                //var url = string.Format("{0}{1}/{2}", servicePrefix, controller, model.GetHashCode());
                 var response = await client.PutAsync(url, content);
 
                 if (!response.IsSuccessStatusCode)
@@ -312,7 +320,8 @@
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
-                var url = string.Format("{0}{1}/{2}", servicePrefix, controller, model.GetHashCode());
+                var url = $"/{servicePrefix}/{controller}/{model.GetHashCode()}";
+                //var url = string.Format("{0}{1}/{2}", servicePrefix, controller, model.GetHashCode());
                 var response = await client.DeleteAsync(url);
 
                 if (!response.IsSuccessStatusCode)
