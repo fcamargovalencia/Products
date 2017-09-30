@@ -1,20 +1,29 @@
 ﻿namespace Products.Models
 {
     using GalaSoft.MvvmLight.Command;
-    using Views;
+    using Services;
     using System.Collections.Generic;
     using System.Windows.Input;
-    using Xamarin.Forms;
     using ViewModels;
 
     public class Category
     {
+        #region Services
+        NavigationService navigationService;
+        #endregion
+
         #region Properties
         public int CategoryId { get; set; }
         public string Description { get; set; }
         public List<Product> Products { get; set; }
         #endregion
 
+        #region Constructors
+        public Category()
+        {
+            navigationService = new NavigationService();
+        }
+        #endregion
 
         #region Commands
         public ICommand SelectCategoryCommand
@@ -29,7 +38,7 @@
         {
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Products = new ProductsViewModel(Products);
-            await Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
+            await navigationService.Navigate("ProductsView");
         }
         #endregion
     }

@@ -4,6 +4,18 @@
              x:Class="Products.Views.CategoriesView"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Categories">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Command="{Binding NewCategoryCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>ic_add_circle.png</OnPlatform.iOS>
+                    <OnPlatform.Android>ic_add_circle.png</OnPlatform.Android>
+                    <OnPlatform.WinPhone>Assets/ic_add_circle.png</OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout
             BindingContext="{Binding Categories}"

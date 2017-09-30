@@ -4,8 +4,6 @@
     using Services;
     using System.ComponentModel;
     using System.Windows.Input;
-    using Views;
-    using Xamarin.Forms;
 
     public class LoginViewModel : INotifyPropertyChanged
     {
@@ -16,6 +14,7 @@
         #region Services
         DialogService dialogService;
         ApiService apiService;
+        NavigationService navigationService;
         #endregion
 
         #region Attributes
@@ -123,6 +122,7 @@
         {
             dialogService = new DialogService();
             apiService = new ApiService();
+            navigationService = new NavigationService();
             IsEnabled = true;
             IsToggled = true;
         }
@@ -187,8 +187,7 @@
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = response;
             mainViewModel.Categories = new CategoriesViewModel();
-            await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
-
+            await navigationService.Navigate("CategoriesView");
             Email = null;
             Password = null;
             IsRunning = false;

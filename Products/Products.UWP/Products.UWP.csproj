@@ -108,6 +108,7 @@
     <None Include="Products.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\ic_add_circle.png" />
     <Content Include="Assets\ic_chevron_right.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
