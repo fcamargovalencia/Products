@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Linq;
 
     public class CategoriesViewModel : INotifyPropertyChanged
     {
@@ -23,7 +24,7 @@
         #endregion
 
         #region Properties
-        public ObservableCollection<Category> Categories
+        public ObservableCollection<Category> CategoriesList
         {
             get
             {
@@ -36,7 +37,7 @@
                     _categories = value;
                     PropertyChanged?.Invoke(
                         this,
-                        new PropertyChangedEventArgs(nameof(Categories)));
+                        new PropertyChangedEventArgs(nameof(CategoriesList)));
                 }
             }
         }
@@ -78,6 +79,7 @@
             }
 
             var categories = (List<Category>)response.Result;
+            CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
         }
         #endregion
     }

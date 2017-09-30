@@ -185,8 +185,8 @@
             }
 
             var mainViewModel = MainViewModel.GetInstance();
-            mainViewModel.Categories = new CategoriesViewModel();
             mainViewModel.Token = response;
+            mainViewModel.Categories = new CategoriesViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
 
             Email = null;

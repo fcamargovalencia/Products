@@ -12,5 +12,19 @@
         public string Image { get; set; }
         public double Stock { get; set; }
         public string Remarks { get; set; }
+        public string ImageFullPath
+        {
+            get
+            {
+                String image = "Content/Images/notImage.png";
+                if (Image != null)
+                {
+                    image = Image.Substring(1);
+                }
+                return string.Format(
+                    "http://productsbackendapp.azurewebsites.net/{0}",
+                    image);
+            }
+        }
     }
 }

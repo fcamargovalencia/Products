@@ -8,7 +8,42 @@
         <StackLayout
             BindingContext="{Binding Categories}"
             Padding="5">
-
+            <ListView 
+                HasUnevenRows="true" 
+                ItemsSource="{Binding CategoriesList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label 
+                                    Grid.Column="0" 
+                                    HorizontalOptions="FillAndExpand" 
+                                    FontSize="Large" 
+                                    Text="{Binding Description}" 
+                                    VerticalOptions="Center">
+                                </Label>
+                                <Image 
+                                    HorizontalOptions="End" >
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
+                                    </Image.GestureRecognizers>
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="ImageSource">
+                                            <OnPlatform.iOS>ic_chevron_right.png</OnPlatform.iOS>
+                                            <OnPlatform.Android>ic_chevron_right.png</OnPlatform.Android>
+                                            <OnPlatform.WinPhone>Assets/ic_chevron_right.png</OnPlatform.WinPhone>
+                                        </OnPlatform>
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
