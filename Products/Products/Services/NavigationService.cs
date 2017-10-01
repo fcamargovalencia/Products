@@ -3,6 +3,7 @@
     using Views;
     using System.Threading.Tasks;
     using Xamarin.Forms;
+    using System;
 
     public class NavigationService
     {
@@ -14,10 +15,18 @@
                     await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
                     break;
                 case "ProductsView":
-                    await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
+                    await Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
+                    break;
+                case "NewCategoryView":
+                    await Application.Current.MainPage.Navigation.PushAsync(new NewCategoryView());
                     break;
             }
 
+        }
+
+        public async Task Back()
+        {
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

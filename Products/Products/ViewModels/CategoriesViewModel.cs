@@ -21,6 +21,7 @@
 
         #region Attributes
         ObservableCollection<Category> _categories;
+        List<Category> categories;
         #endregion
 
         #region Properties
@@ -46,9 +47,23 @@
         #region Constructors
         public CategoriesViewModel()
         {
+            instance = this;
             apiService = new ApiService();
             dialogService = new DialogService();
             LoadCategories();
+        }
+        #endregion
+
+        #region Singleton
+        static CategoriesViewModel instance;
+
+        public static CategoriesViewModel GetInstance()
+        {
+            if (instance == null)
+            {
+                return new CategoriesViewModel();
+            }
+            return instance;
         }
         #endregion
 
@@ -78,7 +93,13 @@
                 return;
             }
 
-            var categories = (List<Category>)response.Result;
+            categories = (List<Category>)response.Result;
+            CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
+        }
+
+        public void AddCategory(Category category)
+        {
+            categories.Add(category);
             CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
         }
         #endregion

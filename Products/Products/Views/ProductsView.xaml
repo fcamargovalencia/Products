@@ -22,9 +22,12 @@
                                 <Image
                                     Grid.Column="0"
                                     HeightRequest="100"
+                                    Aspect="AspectFit"
+                                    MinimumHeightRequest="100"
                                     HorizontalOptions="Start"
                                     Source="{Binding ImageFullPath}"
-                                    WidthRequest="100">
+                                    WidthRequest="100"
+                                    MinimumWidthRequest="100">
                                 </Image>
                                 <Label 
                                     Grid.Column="1" 

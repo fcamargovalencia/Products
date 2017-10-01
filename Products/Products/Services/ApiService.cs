@@ -198,17 +198,15 @@
                 var url = $"/{servicePrefix}/{controller}";
                 //var url = string.Format("{0}{1}", servicePrefix, controller);
                 var response = await client.PostAsync(url, content);
+                var result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return new Response
-                    {
-                        IsSuccess = false,
-                        Message = response.StatusCode.ToString(),
-                    };
+                    var error = JsonConvert.DeserializeObject<Response>(result);
+                    error.IsSuccess = false;
+                    return error;
                 }
 
-                var result = await response.Content.ReadAsStringAsync();
                 var newRecord = JsonConvert.DeserializeObject<T>(result);
 
                 return new Response
