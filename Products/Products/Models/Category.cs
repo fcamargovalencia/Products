@@ -26,6 +26,20 @@
         #endregion
 
         #region Commands
+        public ICommand EditCommand
+        {
+            get
+            {
+                return new RelayCommand(Edit);
+            }
+        }
+
+        async void Edit()
+        {
+            MainViewModel.GetInstance().EditCategory = new EditCategoryViewModel(this);
+            await navigationService.Navigate("EditCategoryView");
+        }
+
         public ICommand SelectCategoryCommand
         {
             get
@@ -39,6 +53,13 @@
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Products = new ProductsViewModel(Products);
             await navigationService.Navigate("ProductsView");
+        }
+        #endregion
+
+        #region Methods
+        public override int GetHashCode()
+        {
+            return CategoryId;
         }
         #endregion
     }

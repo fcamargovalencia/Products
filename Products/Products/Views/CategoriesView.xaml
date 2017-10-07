@@ -9,9 +9,9 @@
             Command="{Binding NewCategoryCommand}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
-                    <OnPlatform.iOS>ic_add_circle.png</OnPlatform.iOS>
-                    <OnPlatform.Android>ic_add_circle.png</OnPlatform.Android>
-                    <OnPlatform.WinPhone>Assets/ic_add_circle.png</OnPlatform.WinPhone>
+                    <OnPlatform.iOS>ic_action_add_circle.png</OnPlatform.iOS>
+                    <OnPlatform.Android>ic_action_add_circle.png</OnPlatform.Android>
+                    <OnPlatform.WinPhone>Assets/ic_action_add_circle.png</OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
@@ -21,11 +21,25 @@
             BindingContext="{Binding Categories}"
             Padding="5">
             <ListView 
-                HasUnevenRows="true" 
+                HasUnevenRows="true"
+                IsPullToRefreshEnabled="True"
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                RefreshCommand="{Binding RefreshCommand}"
                 ItemsSource="{Binding CategoriesList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem
+                                    Command="{Binding EditCommand}"
+                                    Text="Edit">
+                                </MenuItem>
+                                <MenuItem
+                                    Command="{Binding DeleteCommand}"
+                                    IsDestructive="True"
+                                    Text="Delete">
+                                </MenuItem>
+                            </ViewCell.ContextActions>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>

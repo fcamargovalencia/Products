@@ -6,7 +6,7 @@
     using System.ComponentModel;
     using System.Windows.Input;
 
-    public class NewCategoryViewModel : INotifyPropertyChanged
+    public class EditCategoryViewModel : INotifyPropertyChanged
     {
         #region Events
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,6 +21,7 @@
         #region Attributes
         bool _isRunning;
         bool _isEnabled;
+        Category category;
         #endregion
 
         #region Properties
@@ -68,13 +69,14 @@
         #endregion
 
         #region Constructors
-        public NewCategoryViewModel()
+        public EditCategoryViewModel(Category category)
         {
+            this.category = category;
             dialogService = new DialogService();
             apiService = new ApiService();
             navigationService = new NavigationService();
+            Description = category.Description;
             IsEnabled = true;
-
         }
         #endregion
 
@@ -110,14 +112,11 @@
                 return;
             }
 
-            var category = new Category
-            {
-                Description = Description,
-            };
+            category.Description = Description;
 
             var mainViewModel = MainViewModel.GetInstance();
 
-            var response = await apiService.Post(
+            var response = await apiService.Put(
                 "http://productsapiapplication.azurewebsites.net",
                 "api",
                 "Categories",
@@ -133,9 +132,8 @@
                 return;
             }
 
-            category = (Category)response.Result;
             var categoryViewModel = CategoriesViewModel.GetInstance();
-            categoryViewModel.AddCategory(category);
+            categoryViewModel.UpdateCategory(category);
 
             await navigationService.Back();
 

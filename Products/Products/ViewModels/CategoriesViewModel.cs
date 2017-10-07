@@ -1,11 +1,13 @@
 ﻿namespace Products.ViewModels
 {
+    using GalaSoft.MvvmLight.Command;
     using Models;
     using Services;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
+    using System.Windows.Input;
 
     public class CategoriesViewModel : INotifyPropertyChanged
     {
@@ -22,9 +24,28 @@
         #region Attributes
         ObservableCollection<Category> _categories;
         List<Category> categories;
+        bool _isRefreshing;
         #endregion
 
         #region Properties
+        public bool IsRefreshing
+        {
+            get
+            {
+                return _isRefreshing;
+            }
+            set
+            {
+                if (_isRefreshing != value)
+                {
+                    _isRefreshing = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(IsRefreshing)));
+                }
+            }
+        }
+
         public ObservableCollection<Category> CategoriesList
         {
             get
@@ -70,6 +91,7 @@
         #region Methods
         async void LoadCategories()
         {
+            IsRefreshing = true;
             var connection = await apiService.CheckConnection();
 
             if (!connection.IsSuccess)
@@ -95,12 +117,35 @@
 
             categories = (List<Category>)response.Result;
             CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
+            IsRefreshing = false;
         }
 
         public void AddCategory(Category category)
         {
+            IsRefreshing = true;
             categories.Add(category);
             CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
+            IsRefreshing = false;
+        }
+
+        public void UpdateCategory(Category category)
+        {
+            IsRefreshing = true;
+            var oldCategory = categories.Where(c => c.CategoryId == category.CategoryId).FirstOrDefault();
+            oldCategory = category;
+            CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
+            IsRefreshing = false;
+        }
+
+        #endregion
+
+        #region Commands
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new RelayCommand(LoadCategories);
+            }
         }
         #endregion
     }
