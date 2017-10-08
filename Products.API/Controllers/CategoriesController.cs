@@ -86,16 +86,19 @@
             {
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!CategoryExists(id))
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("Index"))
                 {
-                    return NotFound();
+                    return BadRequest("There is another record with the same description");
                 }
                 else
                 {
-                    throw;
+                    return BadRequest(ex.Message);
                 }
+
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -121,13 +124,13 @@
                     ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("Index"))
                 {
-                    return BadRequest("There are a record with the same description");
+                    return BadRequest("There is a record with the same description");
                 }
                 else
                 {
                     return BadRequest(ex.Message);
                 }
-                
+
             }
 
             return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
@@ -144,7 +147,24 @@
             }
 
             db.Categories.Remove(category);
-            await db.SaveChangesAsync();
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                {
+                    return BadRequest("You can't delete this record because it has  related records.");
+                }
+                else
+                {
+                    return BadRequest(ex.Message);
+                }
+
+            }
 
             return Ok(category);
         }

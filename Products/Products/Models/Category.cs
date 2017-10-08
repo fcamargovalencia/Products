@@ -5,11 +5,13 @@
     using System.Collections.Generic;
     using System.Windows.Input;
     using ViewModels;
+    using System;
 
     public class Category
     {
         #region Services
         NavigationService navigationService;
+        DialogService dialogService;
         #endregion
 
         #region Properties
@@ -22,10 +24,32 @@
         public Category()
         {
             navigationService = new NavigationService();
+            dialogService = new DialogService();
         }
         #endregion
 
         #region Commands
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return new RelayCommand(Delete);
+            }
+        }
+
+        async void Delete()
+        {
+            var response = await dialogService.ShowConfirm(
+                "Confirm",
+                "Are you sure to delete this record");
+            if (!response)
+            {
+                return;
+            }
+
+            await CategoriesViewModel.GetInstance().DeleteCategory(this);
+        }
+
         public ICommand EditCommand
         {
             get
