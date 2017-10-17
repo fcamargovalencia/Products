@@ -1,19 +1,46 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Products.Views.ProductsView"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="Products">
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="Products.Views.ProductsView" 
+    BindingContext="{Binding Main, Source={StaticResource Locator}}" 
+    Title="{Binding Category.Description}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Command="{Binding NewProductCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>ic_action_add_circle.png</OnPlatform.iOS>
+                    <OnPlatform.Android>ic_action_add_circle.png</OnPlatform.Android>
+                    <OnPlatform.WinPhone>Assets/ic_action_add_circle.png</OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <StackLayout
-            BindingContext="{Binding Products}"
+        <StackLayout 
+            BindingContext="{Binding Products}" 
             Padding="5">
             <ListView 
                 HasUnevenRows="true" 
-                ItemsSource="{Binding ProductsList}">
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                ItemsSource="{Binding Products}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem 
+                                    Command="{Binding EditCommand}" 
+                                    Text="Edit">
+                                </MenuItem>
+                                <MenuItem 
+                                    Command="{Binding DeleteCommand}" 
+                                    IsDestructive="true"     
+                                    Text="Delete">
+                                </MenuItem>
+                            </ViewCell.ContextActions>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -22,12 +49,9 @@
                                 <Image
                                     Grid.Column="0"
                                     HeightRequest="100"
-                                    Aspect="AspectFit"
-                                    MinimumHeightRequest="100"
                                     HorizontalOptions="Start"
                                     Source="{Binding ImageFullPath}"
-                                    WidthRequest="100"
-                                    MinimumWidthRequest="100">
+                                    WidthRequest="100">
                                 </Image>
                                 <Label 
                                     Grid.Column="1" 

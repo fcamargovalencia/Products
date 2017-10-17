@@ -76,6 +76,7 @@
         {
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Products = new ProductsViewModel(Products);
+            mainViewModel.Category = this;
             await navigationService.Navigate("ProductsView");
         }
         #endregion

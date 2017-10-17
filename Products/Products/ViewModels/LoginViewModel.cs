@@ -125,6 +125,8 @@
             navigationService = new NavigationService();
             IsEnabled = true;
             IsToggled = true;
+            Email = "fabiancv.90@gmail.com";
+            Password = "Usuario321*";
         }
         #endregion
 

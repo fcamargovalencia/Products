@@ -1,10 +1,8 @@
-﻿
+﻿using System.Collections.Generic;
+using System.Web.Http;
 
 namespace Products.API.Controllers
 {
-    using System.Collections.Generic;
-    using System.Web.Http;
-
     [Authorize]
     public class ValuesController : ApiController
     {

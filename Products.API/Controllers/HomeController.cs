@@ -1,7 +1,7 @@
-﻿namespace Products.API.Controllers
-{
-    using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
+namespace Products.API.Controllers
+{
     public class HomeController : Controller
     {
         public ActionResult Index()

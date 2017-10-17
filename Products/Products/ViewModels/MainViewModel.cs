@@ -3,7 +3,6 @@
     using GalaSoft.MvvmLight.Command;
     using Models;
     using Services;
-    using System;
     using System.Windows.Input;
 
     public class MainViewModel
@@ -17,8 +16,11 @@
         public CategoriesViewModel Categories { get; set; }
         public ProductsViewModel Products { get; set; }
         public NewCategoryViewModel NewCategory { get; set; }
+        public NewProductViewModel NewProduct { get; set; }
         public EditCategoryViewModel EditCategory { get; set; }
+        public EditProductViewModel EditProduct { get; set; }
         public TokenResponse Token { get; set; }
+        public Category Category { get; set; }
         #endregion
 
         #region Constructors
@@ -44,6 +46,20 @@
         #endregion
 
         #region Commands
+        public ICommand NewProductCommand
+        {
+            get
+            {
+                return new RelayCommand(GoNewProduct);
+            }
+        }
+
+        async void GoNewProduct()
+        {
+            NewProduct = new NewProductViewModel();
+            await navigationService.Navigate("NewProductView");
+        }
+
         public ICommand NewCategoryCommand
         {
             get

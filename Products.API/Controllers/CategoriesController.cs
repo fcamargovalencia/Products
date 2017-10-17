@@ -5,14 +5,12 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Description;
 
-    //[Authorize(Users = "fabiancv.90@gmail.com")]
     [Authorize]
     public class CategoriesController : ApiController
     {
@@ -26,11 +24,12 @@
 
             foreach (var category in categories)
             {
-                var productResponse = new List<ProductResponse>();
+                var productsResponse = new List<ProductResponse>();
                 foreach (var product in category.Products)
                 {
-                    productResponse.Add(new ProductResponse
+                    productsResponse.Add(new ProductResponse
                     {
+                        CategoryId = product.CategoryId,
                         Description = product.Description,
                         Image = product.Image,
                         IsActive = product.IsActive,
@@ -38,7 +37,7 @@
                         Price = product.Price,
                         ProductId = product.ProductId,
                         Remarks = product.Remarks,
-                        Stock = product.Stock
+                        Stock = product.Stock,
                     });
                 }
 
@@ -46,7 +45,7 @@
                 {
                     CategoryId = category.CategoryId,
                     Description = category.Description,
-                    Products = productResponse
+                    Products = productsResponse,
                 });
             }
 
@@ -92,13 +91,12 @@
                     ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("Index"))
                 {
-                    return BadRequest("There is another record with the same description");
+                    return BadRequest("There are a record with the same description.");
                 }
                 else
                 {
                     return BadRequest(ex.Message);
                 }
-
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -124,13 +122,12 @@
                     ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("Index"))
                 {
-                    return BadRequest("There is a record with the same description");
+                    return BadRequest("There are a record with the same description.");
                 }
                 else
                 {
                     return BadRequest(ex.Message);
                 }
-
             }
 
             return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
@@ -157,13 +154,12 @@
                     ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("REFERENCE"))
                 {
-                    return BadRequest("You can't delete this record because it has  related records.");
+                    return BadRequest("You can't delete this record, becase it has related record.");
                 }
                 else
                 {
                     return BadRequest(ex.Message);
                 }
-
             }
 
             return Ok(category);
