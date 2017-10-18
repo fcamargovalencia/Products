@@ -47,6 +47,10 @@
                     "http://productsapiapplication.azurewebsites.net/{0}",
                     Image.Substring(1));
             }
+            set
+            {
+                
+            }
         }
         #endregion
 

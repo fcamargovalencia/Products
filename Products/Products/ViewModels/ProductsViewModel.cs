@@ -100,12 +100,10 @@
         public void Update(Product product)
         {
             IsRefreshing = true;
-            var oldProduct = products
-                .Where(p => p.ProductId == product.ProductId)
-                .FirstOrDefault();
-            oldProduct = product;
-            Products = new ObservableCollection<Product>(
-                products.OrderBy(c => c.Description));
+            var oldProduct = products.Where(p => p.ProductId == product.ProductId).FirstOrDefault();
+            oldProduct.Image = product.Image;
+            oldProduct.ImageFullPath = product.ImageFullPath;
+            Products = new ObservableCollection<Product>(products.OrderBy(c => c.Description));
             IsRefreshing = false;
         }
 

@@ -304,6 +304,8 @@
                 return;
             }
 
+            product = (Product)response.Result;
+
             ProductsViewModel.GetInstance().Update(product);
 
             await navigationService.Back();
