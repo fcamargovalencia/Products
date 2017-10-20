@@ -288,8 +288,8 @@
 
             var response = await apiService.Put(
                 "http://productsapiapplication.azurewebsites.net",
-                "/api",
-                "/Products",
+                "api",
+                "Products",
                 mainViewModel.Token.TokenType,
                 mainViewModel.Token.AccessToken,
                 product);
