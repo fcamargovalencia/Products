@@ -17,6 +17,7 @@
         public ProductsViewModel Products { get; set; }
         public NewCategoryViewModel NewCategory { get; set; }
         public NewProductViewModel NewProduct { get; set; }
+        public NewCustomerViewModel NewCustomer { get; set; }
         public EditCategoryViewModel EditCategory { get; set; }
         public EditProductViewModel EditProduct { get; set; }
         public TokenResponse Token { get; set; }

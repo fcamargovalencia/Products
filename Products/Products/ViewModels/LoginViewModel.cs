@@ -195,6 +195,22 @@
             IsRunning = false;
             IsEnabled = true;
         }
+
+        public ICommand RegisterNewUserCommand
+        {
+            get
+            {
+                return new RelayCommand(RegisterNewUser);
+            }
+        }
+
+        async void RegisterNewUser()
+        {
+            MainViewModel.GetInstance().NewCustomer = new NewCustomerViewModel();
+            await navigationService.Navigate("NewCustomerView");
+        }
+
+
         #endregion
     }
 }
