@@ -2,9 +2,9 @@
 {
     using Xamarin.Forms;
 
-    public partial class NewProductView : ContentPage
+    public partial class NewCustomerView : ContentPage
     {
-        public NewProductView()
+        public NewCustomerView()
         {
             InitializeComponent();
         }
