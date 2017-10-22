@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.ApplicationInsights.Extensibility;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +22,15 @@ namespace Products.Backend
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DisableApplicationInsightsOnDebug();
+        }
+
+        private static void DisableApplicationInsightsOnDebug()
+        {
+            bool disable;
+            string disableAiTelemetry = ConfigurationManager.AppSettings["DisableAITelemetry"];
+            bool.TryParse(disableAiTelemetry, out disable);
+            TelemetryConfiguration.Active.DisableTelemetry = disable;
         }
     }
 }

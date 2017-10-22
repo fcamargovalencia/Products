@@ -82,6 +82,7 @@
 
                 <ActivityIndicator
                     IsRunning="{Binding IsRunning, Mode=TwoWay}"
+                    IsVisible="{Binding IsRunning, Mode=TwoWay}"
                     VerticalOptions="CenterAndExpand">
                 </ActivityIndicator>
 
